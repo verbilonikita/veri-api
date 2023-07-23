@@ -1,6 +1,6 @@
 import { All, Controller, HttpException, HttpStatus } from '@nestjs/common';
 
-@Controller('*')
+@Controller()
 export class ErrorController {
   @All()
   handleUnexpectedRoute() {

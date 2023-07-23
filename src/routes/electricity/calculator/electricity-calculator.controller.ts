@@ -1,4 +1,4 @@
-import { Controller, Inject, Post, Req, Res } from '@nestjs/common';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { ElectricityCalculatorService } from './electricity-calculator.service';
 
