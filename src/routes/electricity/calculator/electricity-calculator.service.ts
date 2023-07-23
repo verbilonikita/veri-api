@@ -46,9 +46,9 @@ export class ElectricityCalculatorService {
           leftOver > 0 ? (leftOver * rate.additionalKwhCost) / 100 : 0;
         updatedRate.cost = rate.baseCost + additionalCost;
       } else {
-        const totalCost =
-          rate.baseCost * 12 + (kwh * rate.additionalKwhCost) / 100;
-        updatedRate.cost = totalCost;
+        const baseCost = rate.baseCost * 12;
+        const additionalCost = (kwh * rate.additionalKwhCost) / 100;
+        updatedRate.cost = baseCost + additionalCost;
       }
 
       updatedRate.cost = this.ratesCalculatorService.roundToCent(

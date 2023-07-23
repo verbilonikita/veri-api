@@ -2,26 +2,29 @@
 
 ## IMPORTANT
 
-if you want to use docker-compose - please put it in the same root directory with front folder:
+if you want to use docker-compose - please put folders as "siblings" - in the same root directory:
 
 - your folder
-- - api-folder
-- - front-folder
+- - verivox-api
+- - verivox-front
+
+then run "docker-compose up" from "verivox-front"
 
 otherwise, please run npm run start
 
 ## features
 
-1. nest: similar framework to angular, the same architecture, so decided to stick with this framework instead of just simply using express library
+1. nest: similar architecture to angular, so decided to stick with this framework instead of just using express library
 2. exception-filter to catch custom errors
 3. added router - two routes:
 
 - error router to handle unhandled routes
+- route /electricity/calculate that accepts POST request with one key in body "kwh: number"
 - service to handle post request coming from api
 
 4. using json object as mock db
 5. controller handles business logic
 
 - parses data from "db"
-- modifies response (name + annual cost)
+- modifies response: returns { name: string, cost: number } for each option
 - sorts data (first element is array is always a best option for user)

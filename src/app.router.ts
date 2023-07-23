@@ -1,6 +1,6 @@
 import { Routes } from '@nestjs/core';
-import { ElectricityModule } from './modules/electricity/electricity.module';
-import { ErrorModule } from './modules/error/error.module';
+import { ElectricityModule } from './routes/electricity/electricity.module';
+import { ErrorModule } from './routes/error/error.module';
 
 export const routes: Routes = [
   {

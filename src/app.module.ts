@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { routes } from './app.router';
-import { AllModules } from './modules/all-modules.module';
+import { AllModules } from './routes/all-modules.module';
 
 @Module({
   imports: [AllModules, RouterModule.register(routes)],
