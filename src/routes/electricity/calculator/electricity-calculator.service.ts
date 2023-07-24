@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { readFile } from 'fs';
-import { promisify } from 'util';
+import { readFile } from 'fs/promises';
 import {
   IElectricityPlan,
   IElectricityPlanResponse,
@@ -15,8 +14,7 @@ export class ElectricityCalculatorService {
 
   public async getRates(kwh: number) {
     try {
-      const readFileAsync = promisify(readFile);
-      const json = await readFileAsync(db.location, db.encoding);
+      const json = await readFile(db.location, db.encoding);
       const data: IMockDB = JSON.parse(json);
       const modifiedData = this.modifyData(data.options, kwh);
       const sortedData = this.sortData(modifiedData);
