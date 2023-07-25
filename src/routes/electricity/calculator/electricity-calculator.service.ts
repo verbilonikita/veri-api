@@ -1,12 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { readFile } from 'fs/promises';
 import {
   IElectricityPlan,
   IElectricityPlanResponse,
-  IMockDB,
 } from './electricitiy-calculator.types';
-import { db } from './electricity-calculator.const';
 import { RateCalculatorService } from '../../../services/electricity.service';
+import DB from 'src/db';
+import { DB_QUERIES } from 'src/db/db.const';
 
 @Injectable()
 export class ElectricityCalculatorService {
@@ -14,21 +13,15 @@ export class ElectricityCalculatorService {
 
   public async getRates(kwh: number) {
     try {
-      const json = await readFile(db.location, db.encoding);
-      const data: IMockDB = JSON.parse(json);
-      const modifiedData = this.modifyData(data.options, kwh);
-      const sortedData = this.sortData(modifiedData);
-      return sortedData;
+      const data = await DB.run(DB_QUERIES.GET_PLANS);
+      const modifiedData = this.modifyData(data, kwh);
+      return modifiedData;
     } catch {
       throw new HttpException(
         'Unable to access db.',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-
-  private sortData(data: IElectricityPlanResponse[]) {
-    return data.sort((a, b) => a.cost - b.cost);
   }
 
   private modifyData(data: IElectricityPlan[], kwh: number) {

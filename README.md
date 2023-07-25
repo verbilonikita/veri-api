@@ -14,6 +14,8 @@ otherwise, please run npm run start
 
 ## features
 
+Please note, I am using sqlite db with basic setup, without ORM at this point. One controller, simple requests.
+
 1. nest: similar architecture to angular, so decided to stick with this framework instead of just using express library
 2. exception-filter to catch custom errors
 3. added router - two routes:
@@ -22,8 +24,7 @@ otherwise, please run npm run start
 - route /electricity/calculate that accepts POST request with one key in body "kwh: number"
 - service to handle post request coming from api
 
-4. using json object as mock db
-5. controller handles business logic
+4. controller handles business logic
 
 - parses data from "db"
 - modifies response: returns { name: string, cost: number } for each option
