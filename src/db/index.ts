@@ -46,15 +46,20 @@ class DB_CONTROLLER {
     });
   }
 
-  init() {
-    this.sqlite.serialize(async () => {
-      this.sqlite.run(DB_QUERIES.CREATE_TABLE);
-      const data: IMockDB = JSON.parse(JSON.stringify(plans));
-      data.options.forEach(async (plan) => {
-        const planExists = await this.checkIfPlanExists(plan.name);
-        if (!planExists) {
-          await this.addPlan(plan);
-        }
+  async init(): Promise<boolean | string> {
+    return new Promise((res, rej) => {
+      this.sqlite.serialize(async () => {
+        this.sqlite.run(DB_QUERIES.CREATE_TABLE);
+        const data: IMockDB = JSON.parse(JSON.stringify(plans));
+        data.options.forEach(async (plan) => {
+          try {
+            const planExists = await this.checkIfPlanExists(plan.name);
+            if (!planExists) await this.addPlan(plan);
+            res(true);
+          } catch (err) {
+            rej(err.message);
+          }
+        });
       });
     });
   }

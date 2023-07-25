@@ -8,7 +8,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     app.useGlobalFilters(new CustomExceptions());
     app.enableCors();
-    DB.init();
+    await DB.init();
     await app.listen(3000);
   } catch (err) {
     console.log('connection is closed');
