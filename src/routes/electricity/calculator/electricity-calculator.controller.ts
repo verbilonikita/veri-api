@@ -10,7 +10,6 @@ import {
 import { Response } from 'express';
 import { ElectricityCalculatorService } from './electricity-calculator.service';
 import { YourDtoClass } from './electricitiy-calculator.types';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Controller('calculate')
 export class ElectricityCalculatorController {
