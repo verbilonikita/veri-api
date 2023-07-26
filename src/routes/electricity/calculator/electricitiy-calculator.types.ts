@@ -1,3 +1,5 @@
+import { IsNumber } from 'class-validator';
+
 interface IMockDB {
   options: IElectricityPlan[];
 }
@@ -13,6 +15,11 @@ interface IElectricityPlan {
 interface IElectricityPlanResponse {
   name: IElectricityPlan['name'];
   cost: number;
+}
+
+export class YourDtoClass {
+  @IsNumber()
+  kwh: number;
 }
 
 export { IElectricityPlan, IMockDB, IElectricityPlanResponse };

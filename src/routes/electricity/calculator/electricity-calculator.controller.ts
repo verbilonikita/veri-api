@@ -1,6 +1,16 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+  Res,
+  ValidationPipe,
+} from '@nestjs/common';
+import { Response } from 'express';
 import { ElectricityCalculatorService } from './electricity-calculator.service';
+import { YourDtoClass } from './electricitiy-calculator.types';
+import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Controller('calculate')
 export class ElectricityCalculatorController {
@@ -9,12 +19,21 @@ export class ElectricityCalculatorController {
   ) {}
 
   @Post()
-  async calculateKWH(@Req() req: Request, @Res() res: Response) {
-    const { kwh } = req.body;
-    const data = await this.electricityCalculatorService.getRates(kwh);
-    res.status(200).send({
-      message: 'updated',
-      data: data,
-    });
+  async calculateKWH(
+    @Body(new ValidationPipe()) body: YourDtoClass,
+    @Res() res: Response,
+  ) {
+    try {
+      const data = await this.electricityCalculatorService.getRates(body.kwh);
+      res.status(200).send({
+        message: 'updated',
+        data: data,
+      });
+    } catch (err) {
+      throw new HttpException(
+        'Something went wrong, please try again.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
